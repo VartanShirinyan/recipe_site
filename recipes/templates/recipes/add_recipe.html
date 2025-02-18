@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить рецепт</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Добавить новый рецепт</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">Название:</label>
+            <input type="text" name="title" id="title" required>
+
+            <label for="description">Описание:</label>
+            <textarea name="description" id="description" rows="2" required></textarea>
+
+            <label for="cooking_stages">Этапы приготовления:</label>
+            <textarea name="cooking_stages" id="cooking_stages" rows="4" required></textarea>
+
+            <label for="cooking_hours">Часы приготовления:</label>
+            <input type="number" name="cooking_hours" id="cooking_hours" min="0" required>
+
+            <label for="cooking_minutes">Минуты приготовления:</label>
+            <input type="number" name="cooking_minutes" id="cooking_minutes" min="0" max="59" required>
+
+            <label for="image">Изображение:</label>
+            <input type="file" name="image" id="image" accept="image/*">
+
+            <label for="category">Категория:</label>
+            <select name="category" id="category" required>
+                <option value="" disabled selected>Выберите категорию</option>
+                <option value="1">Напитки</option>
+                <option value="2">Каши</option>
+                <option value="3">Салаты</option>
+                <option value="4">Супы</option>
+                <option value="5">Вторые блюда</option>
+                <option value="6">Гарнир</option>
+                <option value="7">Соусы</option>
+                <option value="8">Десерты</option>
+                <option value="9">Выпечка</option>
+            </select>
+            
+
+            <button type="submit">Сохранить рецепт</button>
+        </form>
+        <a href="{% url 'recipe_list' %}">Назад к списку рецептов</a>
+    </div>
+</body>
+</html>
+

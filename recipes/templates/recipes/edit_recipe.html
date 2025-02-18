@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать рецепт</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- <h1>Редактировать рецепт</h1> -->
+        <a href="{% url 'recipe_detail' recipe.pk %}">Вернуться к рецепту</a>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Сохранить изменения</button>
+        </form>
+        <a href="{% url 'recipe_detail' recipe.pk %}" class="btn">Отмена</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать на сайт рецептов!</h1>
+        <h2>Популярные рецепты:</h2>
+        <div class="user-actions">
+            {% if user.is_authenticated %}
+                <span>Привет, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Войти</a>
+                <a href="{% url 'register' %}" class="btn">Зарегистрироваться</a>
+            {% endif %}
+        </div>
+        <div class="recipe-grid">
+            {% for recipe in recipes %}
+                <div class="recipe-card">
+                    <a href="{% url 'recipe_detail' recipe.pk %}">
+                        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        <h3>{{ recipe.title }}</h3>
+                        <p>{{ recipe.description|truncatechars:100 }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'recipe_list' %}" class="btn">Посмотреть все рецепты</a>
+    </div>
+</body>
+</html>

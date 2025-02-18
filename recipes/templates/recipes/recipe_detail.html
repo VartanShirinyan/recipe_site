@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ recipe.title }}</h1>
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+        <p>{{ recipe.description }}</p>
+        <p><strong>Время приготовления:</strong> {{ recipe.cooking_hours }} часов {{ recipe.cooking_minutes }} минут</p>
+        <h2>Шаги приготовления</h2>
+        <p>{{ recipe.cooking_stages|linebreaks }}</p>
+
+        {% if recipe.author == request.user %}
+            <a href="{% url 'edit_recipe' recipe.pk %}" class="btn">Редактировать</a>
+            <form action="{% url 'delete_recipe' recipe.pk %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот рецепт?');">Удалить</button>
+            </form>
+        {% endif %}
+
+        <a href="{% url 'recipe_list' %}" class="btn">Назад к списку рецептов</a>
+    </div>
+</body>
+</html>
